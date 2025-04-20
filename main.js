@@ -50,7 +50,7 @@ function createWindow() {
 
 // 🔒 Función para verificar si la app está bloqueada remotamente
 function checkIfBlocked(callback) {
-  const url = "https://raw.githubusercontent.com/ErikSanzana/calcuralorarisk/main/status.json"; // 👈 cambia esto por tu URL real
+  const url = "https://raw.githubusercontent.com/ErikSanzana/calcuralorarisk/refs/heads/main/status.json?token=GHSAT0AAAAAADCKVCKW3VGSESGKBS4337HU2AE3A6Q"; // 👈 URL corregida
 
   https.get(url, res => {
     let data = "";
