@@ -10,13 +10,30 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "build": {
+    "appId": "com.eriksanzana.calculadorarisk",
+    "productName": "CALCULADORARISK",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "ErikSanzana",
+        "repo": "calcuralorarisk"
+      }
+    ],
+    "win": {
+      "target": "nsis"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ErikSanzana/calcuralorarisk.git"
+  },
   "keywords": [
     "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "Calculadora",
+    "Risk",
+    "Updater",
+    "Remote"
   ],
   "author": "Erik Eduardo Sanzana Velasquez",
   "license": "CC0-1.0",
