@@ -1,19 +1,145 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
-    <link href="./styles.css" rel="stylesheet">
-    <title>Hello World!</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <title>CALCULADORA RIESGO</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <script>
+      // Función pred !important;limpiar el texto pegado
+      function cleanInput(event) {
+        let pastedText = event.clipboardData.getData("text"); // Obtener el texto pegado
+        
+        // Remover cualquier símbolo no numérico excepto coma y punto
+        let cleanedText = pastedText.replace(/[^0-9.,]/g, '');
+        
+        // Si el número usa coma como separador de decimales (ejemplo: 1.945.129,12)
+        if (cleanedText.includes(',')) {
+          // Remover los puntos de separadores de miles y reemplazar la coma por un punto decimal
+          cleanedText = cleanedText.replace(/\./g, '').replace(',', '.');
+        } else {
+          // Si el número no tiene coma, pero tiene puntos como separador de miles, eliminarlos
+          cleanedText = cleanedText.replace(/\./g, '');
+        }
+        
+        // Establecer el valor limpio en el campo de entrada
+        event.target.value = cleanedText;
+        event.preventDefault(); // Prevenir el pegado original
+      }
+
+      // Función para vaciar los campos de entrada
+      function clearFields() {
+        const inputs = document.querySelectorAll("input[type='number']");
+        inputs.forEach(input => {
+          input.value = ''; // Vacía el valor del campo
+        });
+        document.getElementById("re").value = ''; // Limpia el campo resultado
+      }
+
+      // Función para calcular la suma de los campos
+      function sumar() {
+        // Obtener los valores de los campos
+        const deposito = parseFloat(document.getElementById("de").value) || 0;
+        const saldoInicial = parseFloat(document.getElementById("si").value) || 0;
+        const withdraw = parseFloat(document.getElementById("wi").value) || 0;
+        const betAmount = parseFloat(document.getElementById("be").value) || 0;
+        const winAmount = parseFloat(document.getElementById("win").value) || 0;
+        const bonus = parseFloat(document.getElementById("bo").value) || 0;
+        const balanceManual = parseFloat(document.getElementById("bm").value) || 0;
+        const cb = parseFloat(document.getElementById("cb").value) || 0;
+        const or = parseFloat(document.getElementById("or").value) || 0;
+
+        // Sumar todos los valores excepto "withdraw", que se resta
+        const resultado = deposito - withdraw - betAmount + winAmount + bonus + balanceManual + cb - or + saldoInicial;
+        
+        // Mostrar el resultado en el campo "re"
+        document.getElementById("re").value = resultado.toFixed(2);
+      }
+
+      // Agregar los eventos al cargar la página
+      document.addEventListener("DOMContentLoaded", function() {
+        // Seleccionar todos los inputs donde quieras aplicar el filtro
+        const inputs = document.querySelectorAll("input[type='number']");
+
+        inputs.forEach(input => {
+          input.addEventListener("paste", cleanInput); // Agregar el evento de pegado
+        });
+
+        // Deshabilitar el campo de resultado
+        document.getElementById("re").readOnly = true;
+      });
+      
+    </script>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    We are using Node.js <span id="node-version"></span>,
-    Chromium <span id="chrome-version"></span>,
-    and Electron <span id="electron-version"></span>.
-
-    <!-- You can also require other files to run in this process -->
-    <script src="./renderer.js"></script>
+    <div>
+      <div class="fath">
+        <label>RESULTADO</label>
+        <input type="number" id="re" class="form-control" placeholder="TENDRIA EN BALANCE" readonly>
+      </div>
+    </div>
+    <div>
+      <div class="fath">
+        <label class="form-label">DEPOSITS</label>
+        <input type="number" id="de" class="form-control" placeholder="DEPOSITO">
+      </div>
+    </div>
+    <div>
+      <div class="fath">
+        <label class="form-label">WITHDRAWALS</label>
+        <input type="number" id="wi" class="form-control" placeholder="POR RETIRAR">
+      </div>
+    </div>
+    <div>
+      <div class="fath">
+        <label class="form-label">WITHDRAWALS</label>
+        <input type="number" id="or" class="form-control" placeholder="YA RETIRADO">
+      </div>
+    </div>
+    <div>
+      <div class="fath">
+        <label class="form-label" id="red">BETAMOUNT</label>
+        <input type="number" id="be" class="form-control">
+      </div>
+    </div>
+    <div>
+      <div class="fath">
+        <label class="form-label" id="green">WINAMOUNT</label>
+        <input type="number" id="win" class="form-control">
+      </div>
+    </div>
+    <div>
+      <div class="fath">
+        <label class="form-label">BONUS</label>
+        <input type="number" id="bo" class="form-control">
+      </div>
+    </div>
+    <div>
+      <div class="fath">
+        <label class="form-label">S.MANUAL</label>
+        <input type="number" id="bm" class="form-control">
+      </div>
+    </div>
+    <div>
+      <div class="fath">
+        <label class="form-label">CB</label>
+        <input type="number" id="cb" class="form-control">
+      </div>
+    </div>
+    <div>
+      <div class="fath">
+        <label class="form-label">S.INICIAL</label>
+        <input type="number" id="si" class="form-control">
+      </div>
+    </div>
+    <div class="col-md-2">
+      <button type="button" class="btn btn-success" onclick="sumar()">CALCULAR</button>
+      <button type="button" class="btn btn-danger" onclick="clearFields()">BORRAR</button>
+    </div>
   </body>
 </html>
