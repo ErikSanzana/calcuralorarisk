@@ -1,6 +1,8 @@
 const { app, BrowserWindow, Menu, shell, dialog } = require('electron');
 const path = require('path');
 const https = require('https'); // 👈 agregado para consultar bloqueo
+const { autoUpdater } = require('electron-updater');// actualizador
+
 
 let mainWindow;
 
@@ -79,6 +81,7 @@ app.whenReady().then(() => {
   // 👇 Verificamos si la app está bloqueada antes de crear la ventana
   checkIfBlocked(() => {
     createWindow();
+    autoUpdater.checkForUpdatesAndNotify();
 
     app.on('activate', () => {
       if (BrowserWindow.getAllWindows().length === 0) createWindow();
