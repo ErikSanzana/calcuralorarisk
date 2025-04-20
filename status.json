@@ -1,3 +1,4 @@
 {
-    "blocked": true 
-}
+    "blocked": false,
+    "message": "La aplicación está habilitada."
+}  
