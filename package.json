@@ -1,6 +1,6 @@
 {
   "name": "CALCULADORARISK",
-  "version": "16.09.2024",
+  "version": "1.0.0",
   "description": "calculadora",
   "main": "main.js",
   "scripts": {
